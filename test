@@ -1,0 +1,24 @@
+#!/bin/bash
+
+CREATE_USER_NAME="n4"
+
+# Create account
+echo "============= now create an account ============="
+sudo useradd -s /usr/bin/fish -m $CREATE_USER_NAME
+sudo usermod -aG devs $CREATE_USER_NAME
+sudo passwd $CREATE_USER_NAME
+
+if getent passwd "$1" > /dev/null 2>&1; then
+    echo "yes the user exists"
+else
+    echo "No, the user does not exist"
+fi
+mkdir -p /home/santosh/.ssh
+chmod 0700 /home/santosh/.ssh
+touch /home/santosh/.ssh/authorized_keys
+chmod 600 /home/santosh/.ssh/authorized_keys
+sudo mkdir -p /var/www/html/santosh-dev.jove.com/
+sudo chown -R santosh /var/www/html/santosh-dev.jove.com/
+sudo mkdir -p /var/log/httpd/santosh-dev.jove.com/
+sudo chown -R santosh /var/log/httpd/santosh-dev.jove.com/
+#
